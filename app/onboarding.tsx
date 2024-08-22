@@ -1,7 +1,8 @@
-import { View, StyleSheet, Button } from "react-native";
-import { theme } from "@/theme";
 import { useRouter } from "expo-router";
+import { Button, StyleSheet, View } from "react-native";
+
 import { useUserStore } from "@/store/userStore";
+import { theme } from "@/theme";
 
 export default function OnboardingScreen() {
   const router = useRouter();
