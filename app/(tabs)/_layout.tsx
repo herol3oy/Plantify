@@ -1,12 +1,14 @@
+import { useUserStore } from "@/store/userStore";
 import { theme } from "@/theme";
 import Entypo from "@expo/vector-icons/Entypo";
 import Feather from "@expo/vector-icons/Feather";
 import { Redirect, Tabs } from "expo-router";
 import { Text } from "react-native";
 
-const hasFinishedOnboarding = true;
-
 export default function Layout() {
+  const hasFinishedOnboarding = useUserStore(
+    (state) => state.hasFinishedOnboarding,
+  );
   if (!hasFinishedOnboarding) {
     return <Redirect href="/onboarding" />;
   }
