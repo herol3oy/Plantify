@@ -1,5 +1,6 @@
-import { Button, StyleSheet, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 
+import { PlantlyButton } from "@/components/PlantlyButton";
 import { useUserStore } from "@/store/userStore";
 import { theme } from "@/theme";
 
@@ -8,7 +9,7 @@ export default function ProfileScreen() {
 
   return (
     <View style={styles.container}>
-      <Button title="Back to onboarding" onPress={toggleHasOnboarded} />
+      <PlantlyButton title="Back to onboarding" onPress={toggleHasOnboarded} />
     </View>
   );
 }
