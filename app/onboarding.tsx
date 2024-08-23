@@ -1,7 +1,8 @@
 import { LinearGradient } from "expo-linear-gradient";
 import { useRouter } from "expo-router";
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
+import { useEffect, useRef } from "react";
+import { Animated, Easing, StyleSheet, Text, View } from "react-native";
 
 import { PlantlyButton } from "@/components/PlantlyButton";
 import { PlantlyImage } from "@/components/PlantlyImage";
@@ -11,6 +12,30 @@ import { theme } from "@/theme";
 export default function OnboardingScreen() {
   const router = useRouter();
   const toggleHasOnboarded = useUserStore((state) => state.toggleHasOnboarded);
+  const translateY = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    const animation = Animated.loop(
+      Animated.sequence([
+        Animated.timing(translateY, {
+          toValue: -10,
+          duration: 2000,
+          easing: Easing.inOut(Easing.sin),
+          useNativeDriver: true,
+        }),
+        Animated.timing(translateY, {
+          toValue: 0,
+          duration: 2000,
+          easing: Easing.inOut(Easing.sin),
+          useNativeDriver: true,
+        }),
+      ]),
+    );
+
+    animation.start();
+
+    return () => animation.stop();
+  }, [translateY]);
 
   const handlePress = () => {
     toggleHasOnboarded();
@@ -30,7 +55,9 @@ export default function OnboardingScreen() {
           Keep your plants healthy and hydrated
         </Text>
       </View>
-      <PlantlyImage />
+      <Animated.View style={{ transform: [{ translateY }] }}>
+        <PlantlyImage />
+      </Animated.View>
       <PlantlyButton title="Let me in!" onPress={handlePress} />
     </LinearGradient>
   );

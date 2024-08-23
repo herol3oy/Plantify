@@ -1,12 +1,17 @@
+import { useRouter } from "expo-router";
 import { useState } from "react";
 import { Alert, StyleSheet, Text, TextInput, View } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 import { PlantlyButton } from "@/components/PlantlyButton";
 import { PlantlyImage } from "@/components/PlantlyImage";
+import { usePlantStore } from "@/store/plantsStore";
 import { theme } from "@/theme";
 
 export default function NewScreen() {
+  const router = useRouter();
+  const addPlant = usePlantStore((state) => state.addPlant);
+
   const [name, setName] = useState<string>();
   const [days, setDays] = useState<string>();
 
@@ -29,7 +34,8 @@ export default function NewScreen() {
       );
     }
 
-    console.log("Adding plant", name, days);
+    addPlant(name, Number(days));
+    router.navigate("/");
   };
 
   return (
